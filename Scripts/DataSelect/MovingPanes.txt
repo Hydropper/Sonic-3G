@@ -1,0 +1,529 @@
+// ----------------------------------
+// RSDK Project: Sonic 1/Sonic 2
+// Script Description: Settings Setup Object
+// Script Author: Christian Whitehead/Simon Thomley
+// Unpacked by Rubberduckycooly's script unpacker
+// ----------------------------------
+
+// Aliases
+public value RedPaneXpos = 0;
+public value Xpos = 0;
+public value global1 = 0;
+public value PaneImage = 0;
+public value SelectPane = 0;
+public value PanesMoving = 0;
+public value SharedPanes1 = 0;
+public value ZoneArray = 0;
+
+
+event ObjectMain
+	switch object.propertyValue
+	case 0
+	case 1
+	case 2
+
+
+
+	if inputPress.buttonR == 1 // Reset saves
+
+		saveRAM[1024] = 0
+		saveRAM[1025] = 0
+		saveRAM[1026] = 0
+		saveRAM[1027] = 0
+		saveRAM[1028] = 0
+		saveRAM[1029] = 0
+	end if
+	if inputPress.buttonL == 1 
+
+		saveRAM[1024] = 1
+		saveRAM[1025] = 2
+		saveRAM[1026] = 3
+		saveRAM[1027] = 4
+		saveRAM[1028] = 5
+		saveRAM[1029] = 6
+	end if
+
+
+
+
+	if object.value46 != 1
+		object.value31 = 4
+		object.value46 = 1
+		object.value35 = 26
+		object.value39 = 173
+		Xpos = 0
+	end if
+
+	object.value7++
+	if Xpos == 0
+		if inputDown.Right == 1
+			if object.value7 >= 17
+				PlaySfx(SfxName[SlotMachine], 0)
+				object.value7 = 0
+			else
+			end if
+			if object.value35 < 500
+				if object.value21 == 0
+					object.value23 = 1
+				end if
+			end if
+		end if
+		if inputDown.Left == 1
+			if object.value7 >= 17
+				PlaySfx(SfxName[SlotMachine], 0)
+				object.value7 = 0
+			else
+			end if
+			if object.value35 > 13
+				if object.value23 == 0
+					object.value21 = 1
+				end if
+			end if
+		end if
+	end if
+
+if object.value21 == 1
+	object.value22++
+	if object.value22 <= 13
+		object.ixpos+= 8
+		object.value35--
+	else 
+		object.value22 = 0
+		object.value21 = 0
+	end if
+end if
+
+if object.value23 == 1
+	object.value22++
+	if object.value22 <= 13
+		object.ixpos-= 8
+		object.value35++
+	else 
+		object.value22 = 0
+		object.value23 = 0
+	end if
+end if
+break
+end switch
+
+				temp6 = object[38].ixpos
+				temp6 -= 64
+				temp6 /= 104
+				temp6 -= 7
+
+				abs(temp6)
+				arrayPos7 = temp6
+				arrayPos7 += 1023	
+				ZoneArray = saveRAM[arrayPos7]
+				object.value47 = ZoneArray
+				object.value47 *= 2
+				object.value47 -= 2 
+				if object.value47 < 0
+					object.value47 = 0
+				end if
+				saveRAM[1054] = temp6
+
+				arrayPos3 = temp6
+				arrayPos3 += 1029
+				arrayPos4 = arrayPos3
+				arrayPos4 += 6
+				temp6 *= 2
+				temp6 -= 2 
+				WriteSaveRam()
+
+
+if inputPress.buttonA ==1
+		if object.value21 != 1
+			if object.value23 != 1
+				stage.ActiveList = REGULAR_STAGE
+				stage.listPos = object.value47
+				stage.playerListPos = saveRAM[arrayPos3]
+				StopMusic()
+				LoadStage()
+			end if
+		end if
+end if
+
+end event
+
+
+event ObjectDraw
+
+
+
+	object.value27 += 2
+	object.value29 = object.value27
+	Sin256(object.value29, object.value27)
+	object.value29 /=5
+	object.value29 += 100
+	DrawRect(screen.xcenter, object.value29, 20, 20, 150, 150, 150, 255)
+
+
+	switch object.propertyValue
+
+	case 0 // yellow
+
+		object.inkeffect = INK_ALPHA
+		object.alpha = 127
+		DrawSpriteScreenFX(8, FX_INK, object.ixpos, object.iypos)
+		DrawSprite(0)
+		object.value32++
+		if object.value32 >= 4
+			object.value31++
+			object.value32 = 0
+		end if
+		if object.value31 >= 8
+			object.value31 = 4
+		end if
+			object.draworder = 1
+		DrawSprite(object.value31)
+
+
+
+
+
+	while arrayPos1 < 6
+		arrayPos2 = arrayPos1
+		arrayPos2 += 33
+		arrayPos5 = arrayPos1
+		arrayPos5 += 1024
+
+
+
+		temp0 = object[arrayPos2].ixpos
+		if saveRAM[arrayPos5] == 0
+			DrawSpriteScreenXY(20, temp0, 15)
+		else
+		end if
+		arrayPos1++
+	loop
+	arrayPos1 = 0
+
+
+
+		object.value18 = object.ixpos
+		arrayPos5 = object.entityPos
+		arrayPos5 += 997
+		object.value17 = saveRAM[arrayPos5]
+		object.value17 += 16
+
+		object.value18 += 28
+		DrawSpriteScreenXY(object.value17, object.value18, 115)
+
+
+
+		arrayPos5 += 18
+		object.value17 = saveRAM[arrayPos5]
+		object.value17 += 20
+
+		object.value18 = object.ixpos
+		object.value18 += 40
+
+
+		object.value37 = 110
+
+		if object.value17 >= 21
+			DrawSpriteScreenXY(21, object.value18, object.value37)
+			if object.value17 >= 22
+				DrawSpriteScreenXY(22, object.value18, object.value37)
+				if object.value17 >= 23
+					DrawSpriteScreenXY(23, object.value18, object.value37)
+					if object.value17 >= 24
+						DrawSpriteScreenXY(24, object.value18, object.value37)
+						if object.value17 >= 25
+							DrawSpriteScreenXY(25, object.value18, object.value37)
+							if object.value17 >= 26
+								DrawSpriteScreenXY(26, object.value18, object.value37)
+								if object.value17 >= 27
+									DrawSpriteScreenXY(27, object.value18, object.value37)
+								end if
+							end if
+						end if
+					end if
+				end if
+			end if
+		end if
+		
+
+		
+
+		
+	break
+
+	case 1 // red highlighter
+
+
+
+
+	object.value0++
+		RedPaneXpos = object[0].ixpos
+		object.value45 = screen.xcenter
+		object.value45 -= 39
+		RedPaneXpos += object.value45
+
+
+		SelectPane = object[38].ixpos
+		SelectPane -= 64
+		SelectPane /= 104
+		SelectPane -= 6
+		abs(SelectPane)
+		saveRAM[1054] = SelectPane
+
+		arrayPos2 = SelectPane
+		arrayPos2 += 1024
+		arrayPos0 = arrayPos2
+		arrayPos0 += 24
+
+				temp0 = saveRAM[arrayPos0]
+				if temp0 >= 7
+					specialStage.emeralds = 127
+				else
+					specialStage.emeralds = temp0
+				end if
+
+		if saveRAM[arrayPos2] == 0
+			SharedPanes1 = 1
+		else
+			SharedPanes1 = 0
+		end if
+
+		object.value44 = ZoneArray
+		object.value44 += 9
+		if object.value21 != 1
+			if object.value23 != 1
+				if object.value39 >= 173
+					if SharedPanes1 == 0
+						object.draworder = 0
+						DrawSpriteScreenXY(object.value44, RedPaneXPos, 15)
+						object.draworder = 6
+					else
+
+						temp2 = object[38].ixpos // Begin script for player changing
+						temp2 -= 64
+						temp2 /= 104
+						arrayPos7 = 1036
+						arrayPos7 -= temp2
+						if inputPress.up == 1
+							saveRAM[arrayPos7]--
+							inputPress.up = 0
+							WriteSaveRam()
+						end if
+						if inputPress.down == 1
+							saveRAM[arrayPos7]++
+							inputPress.down = 0
+							WriteSaveRam()
+						end if
+						if saveRAM[arrayPos7] >= 4
+							saveRAM[arrayPos7] = 0
+						end if
+						if saveRAM[arrayPos7] < 0
+							saveRAM[arrayPos7] = 3
+						end if 					 // End script for player changing
+
+
+
+
+						object.value11++
+						if object.value11 >= 16
+							DrawSpriteScreenXY(35, RedPaneXPos, 52)
+							object.direction = FLIP_Y
+							DrawSpriteScreenFX(35, FX_FLIP, RedPaneXPos, 228)
+							if object.value11 >= 32
+								object.value11 = 0
+							end if
+						end if
+					end if
+				end if
+			end if
+		end if
+
+
+
+		global1 = object.value35
+		if object.value35 > 13
+				if object.value0 >= 4
+					DrawSpriteScreenXY(1, RedPaneXPos, 15)
+					if object.value0 >= 8
+						object.value0 = 0
+					end if
+				end if
+			else
+
+
+		if inputPress.left == 1
+			if Xpos == 0
+				if 	object.value42 != 1 
+					object.value41 = 1
+				end if
+			end if
+		end if
+		if inputPress.right == 1
+			if object.value7 >= 17
+				PlaySfx(SfxName[SlotMachine], 0)
+			end if
+			if 	object.value41 != 1 
+				object.value42 = 1 
+			end if
+		end if
+
+
+
+if object.value41 == 1
+	Xpos = 1
+	object.value22++
+	if object.value22 <= 13
+		object.value38-= 8
+	else 
+		object.value22 = 0
+		object.value41 = 0
+	end if
+end if
+
+if object.value42 == 1
+	object.value22++
+	if object.value22 <= 13
+		object.value38+= 8
+	else 
+		object.value22 = 0
+		object.value42 = 0
+		Xpos = 0
+	end if
+end if
+
+
+		object.value39 = object.value38
+		object.value39 += 173
+
+		if object.value39 <= 125 // Halfway to square transition
+			SelectPane = 0
+			SelectPane -= 1
+			object.value36 = 3
+		else
+			object.value36 = 1
+		end if
+
+
+			if object.value0 >= 4 // If frame hits 4, show
+				DrawSpriteScreenXY(object.value36, object.value39, 15)
+				if object.value0 >= 8 // If frame hits 8, hide
+					object.value0 = 0
+				end if
+			end if
+
+
+		end if
+
+
+
+
+
+	break
+
+	case 2 // no save
+	if object.value28 != 1
+		object.ixpos = -34
+		object.value28 = 1
+	end if
+	object.inkeffect = INK_ALPHA
+	object.alpha = 127
+	DrawSpriteFX(9, FX_INK, object.xpos, object.ypos)
+	DrawSprite(2)
+
+
+				arrayPos2 = saveRAM[1054]
+				arrayPos2 += 1023
+
+
+
+	break
+
+	case 3 // delete (yarharharh)
+	if object.value28 != 1
+		object.ixpos = 256
+		object.value28 = 1
+	end if
+	object.inkeffect = INK_ALPHA
+	object.alpha = 127
+	object.ixpos = object[38].ixpos
+	object.ixpos += 104
+	DrawSpriteFX(9, FX_INK, object.xpos, object.ypos)
+	DrawSprite(2)
+
+
+				arrayPos2 = saveRAM[1054]
+				arrayPos2 += 1023
+
+
+
+	break
+
+	end switch
+end event
+
+
+event ObjectStartup
+	LoadSpriteSheet("DSelect/Objects1.gif")
+	SpriteFrame(-1, 0, 90, 178, 1, 1) // Yellow pane
+	SpriteFrame(0, 0, 78, 178, 183, 1) // Red pane
+	SpriteFrame(1, 0, 73, 82, 339, 1)
+	SpriteFrame(0, 0, 76, 83, 262, 1)
+
+	SpriteFrame(4, 5, 80, 56, 343, 85) // Static screen frames
+	SpriteFrame(4, 5, 80, 56, 424, 85)
+	SpriteFrame(4, 5, 80, 56, 262, 142)
+	SpriteFrame(4, 5, 80, 56, 343, 142)
+
+	SpriteFrame(4, 5, 90, 178, 92, 1) // yeller shadow
+	SpriteFrame(6, 5, 73, 82, 413, 1) // squrrr shadow
+
+	SpriteFrame(-1, 5, 80, 56, 1, 256) // aiz
+	SpriteFrame(-1, 5, 80, 56, 83, 256) // hcz
+	SpriteFrame(-1, 5, 80, 56, 163, 256) // mgz
+	SpriteFrame(-1, 5, 80, 56, 244, 256) // cnz
+	SpriteFrame(-1, 5, 80, 56, 325, 256) // icz
+	SpriteFrame(-1, 5, 80, 56, 406, 256) // lbz
+
+	SpriteFrame(-1, 5, 31, 40, 403, 370) // Sonic
+	SpriteFrame(-5, 10, 36, 35, 435, 370) // Tails
+	SpriteFrame(3, 5, 32, 40, 472, 370) // Knux
+	SpriteFrame(-7, 6, 51, 39, 95, 180) // Sonic & Tails
+
+	SpriteFrame(4, 5, 80, 56, 262, 85) // No save icon
+
+	SpriteFrame(0, 0, 8, 8, 184, 180) // Green Chaos Emerald
+	SpriteFrame(-20, 10, 8, 8, 193, 180) // Orange Chaos Emerald
+	SpriteFrame(20, 10, 8, 8, 184, 189) // Purple Chaos Emerald
+	SpriteFrame(-25, 32, 8, 8, 193, 189) // Blue Chaos Emerald
+	SpriteFrame(25, 32, 8, 8, 184, 198) // Silver Chaos Emerald
+	SpriteFrame(-11, 49, 8, 8, 193, 198) // Red Chaos Emerald
+	SpriteFrame(12, 50, 8, 8, 202, 180) // Cyan Chaos Emerald
+
+	SpriteFrame(0, 0, 8, 8, 184, 180) // Green Chaos Emerald
+	SpriteFrame(-20, 10, 8, 8, 193, 180) // Orange Super Emerald
+	SpriteFrame(20, 10, 8, 8, 184, 189) // Purple Super Emerald
+	SpriteFrame(-25, 32, 8, 8, 193, 189) // Blue Super Emerald
+	SpriteFrame(25, 32, 8, 8, 184, 198) // Silver Super Emerald
+	SpriteFrame(-11, 49, 8, 8, 193, 198) // Red Super Emerald
+	SpriteFrame(12, 50, 8, 8, 202, 180) // Cyan Super Emerald
+
+	SpriteFrame(31, 50, 16, 16, 245, 194) // Red Arrow
+
+	ReadSaveRAM()	
+	while object.value22 <= 13
+		object.value38+= 8
+		object.value22++
+	loop
+	object.value22 = 0
+
+
+
+end event
+
+event RSDKDraw
+	DrawSprite(0)
+end event
+
+event RSDKLoad
+	LoadSpriteSheet("Settings/BG.gif")
+	SpriteFrame(0, 0, 424, 240, 0, 0)
+end event

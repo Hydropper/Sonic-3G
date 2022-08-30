@@ -1,0 +1,49 @@
+// ----------------------------------
+// RSDK Project: Sonic 1/Sonic 2
+// Script Description: Settings Setup Object
+// Script Author: Christian Whitehead/Simon Thomley
+// Unpacked by Rubberduckycooly's script unpacker
+// ----------------------------------
+
+// Aliases
+
+
+public value MenuSel = 0;
+event ObjectMain
+	music.volume = 100
+
+
+end event
+
+
+event ObjectDraw
+	object.drawOrder = 0
+	temp0 = screen.xcenter
+	temp0 -= 212
+	DrawSpriteScreenXY(0, temp0, 0)
+	DrawRect(0, 0, temp0, 240, 194, 234, 253, 255)
+	temp1 = screen.xcenter
+	temp1 += 212
+	temp2 = screen.xsize
+	temp2 -= temp1
+	DrawRect(temp1, 0, temp2, 240, 214, 214, 194, 255)
+end event
+
+
+event ObjectStartup
+	SetMusicTrack("Settings.ogg", 0, 729115)
+	PlayMusic(0)
+
+	LoadSpriteSheet("Settings/BG.gif")
+	SpriteFrame(0, 0, 424, 240, 0, 0)
+
+end event
+
+event RSDKDraw
+	DrawSprite(0)
+end event
+
+event RSDKLoad
+	LoadSpriteSheet("Settings/BG.gif")
+	SpriteFrame(0, 0, 424, 240, 0, 0)
+end event

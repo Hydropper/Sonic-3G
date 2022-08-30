@@ -1,0 +1,49 @@
+// ----------------------------------
+// RSDK Project: Sonic 1/Sonic 2
+// Script Description: Settings Setup Object
+// Script Author: Christian Whitehead/Simon Thomley
+// Unpacked by Rubberduckycooly's script unpacker
+// ----------------------------------
+
+// Aliases
+
+event ObjectMain
+	scene3D.vertexCount = 4
+	scene3D.faceCount = 1
+	faceBuffer[0].flag = FACE_COLOURED_3D
+	faceBuffer[0].color = 0x0000ff
+	faceBuffer[0].a = 1
+	faceBuffer[0].b = 2
+	faceBuffer[0].c = 3
+	faceBuffer[0].d = 4
+
+	vertexBuffer[1].x = 32
+	vertexBuffer[1].y = 32
+	vertexBuffer[1].z = 32
+	vertexBuffer[2].x = 64
+	vertexBuffer[2].y = 64
+	vertexBuffer[2].z = 64
+	vertexBuffer[3].x = 128
+	vertexBuffer[3].y = 128
+	vertexBuffer[3].z = 128
+	vertexBuffer[4].x = 256
+	vertexBuffer[4].y = 256
+	vertexBuffer[4].z = 256
+
+
+end event
+
+
+event ObjectDraw
+	Draw3DScene() 
+end event
+
+
+event ObjectStartup
+end event
+
+event RSDKDraw
+end event
+
+event RSDKLoad
+end event

@@ -1,0 +1,54 @@
+// ----------------------------------
+// RSDK Project: Sonic 1/Sonic 2
+// Script Description: Settings Numbers Object
+// Script Author: Christian Whitehead/Simon Thomley
+// Unpacked by Rubberduckycooly's script unpacker
+// ----------------------------------
+
+// Aliases
+
+
+event ObjectMain
+	object.drawOrder = 4
+
+	object.value1 = 100
+
+end event
+
+
+event ObjectDraw
+	if MenuSel == 0
+		DrawNumbers(0, 124, 20, engine.BGMVolume, 3, 8, 1)
+	end if
+	if MenuSel == 1
+		DrawNumbers(0, 124, 34, engine.SFXVolume, 3, 8, 1)
+	end if
+end event
+
+
+event ObjectStartup
+
+	LoadSpriteSheet("Global/SettingsText1.gif")
+
+	// HUD frames
+	SpriteFrame(0, 0, 8, 11, 36, 245)
+	SpriteFrame(0, 0, 8, 11, 27, 209)
+	SpriteFrame(0, 0, 8, 11, 36, 209)
+	SpriteFrame(0, 0, 8, 11, 45, 209)
+	SpriteFrame(0, 0, 8, 11, 27, 221)
+	SpriteFrame(0, 0, 8, 11, 36, 221)
+	SpriteFrame(0, 0, 8, 11, 45, 221)
+	SpriteFrame(0, 0, 8, 11, 27, 233)
+	SpriteFrame(0, 0, 8, 11, 36, 233)
+	SpriteFrame(0, 0, 8, 11, 45, 233)
+
+end event
+
+event RSDKDraw
+	DrawSprite(0)
+end event
+
+event RSDKLoad
+	LoadSpriteSheet("Global/Display.gif")
+	SpriteFrame(-16, -16, 32, 32, 1, 143)
+end event

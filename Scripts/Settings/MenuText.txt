@@ -1,0 +1,140 @@
+// ----------------------------------
+// RSDK Project: Sonic 1/Sonic 2
+// Script Description: Settings Numbers Object
+// Script Author: Christian Whitehead/Simon Thomley
+// Unpacked by Rubberduckycooly's script unpacker
+// ----------------------------------
+
+// Aliases
+public value HoldCountdown = 0;
+
+event ObjectMain
+
+	// Basic Setup/Controls
+	if MenuSel < 0
+		Menusel = 0
+	end if
+	if inputPress.Down == 1
+		MenuSel++
+	end if
+	if inputPress.Up == 1
+		MenuSel--
+	end if
+
+
+
+	// Volume controls
+	if MenuSel == 0
+		if inputDown.Left == 1
+			HoldCountdown++
+			if HoldCountdown > 1
+				engine.BGMVolume--
+				HoldCountdown = 0
+			end if
+		end if
+		if inputDown.Right == 1
+			HoldCountdown++
+			if HoldCountdown > 1
+				engine.BGMVolume++
+				HoldCountdown = 0
+			end if
+		end if
+	end if
+
+	if MenuSel == 1
+		if inputDown.Left == 1
+			HoldCountdown++
+			if HoldCountdown > 1
+				engine.SFXVolume--
+				HoldCountdown = 0
+			end if
+		end if
+		if inputDown.Right == 1
+			HoldCountdown++
+			if HoldCountdown > 1
+				engine.SFXVolume++
+				HoldCountdown = 0
+			end if
+		end if
+	end if
+
+	if MenuSel == 2
+		if inputPress.Left == 1
+			object.value6--
+		end if
+		if inputPress.Right == 1
+			object.value6++
+		end if
+	end if
+	if object.value6 < 6
+		object.value6 = 9
+	end if
+	if object.value6 > 9
+		object.value6 = 6
+	end if
+
+
+	saveRAM[57] = object.value6
+	saveRAM[57] -= 6
+
+	if object.value0 != 1
+		object.value10 = 255
+		object.value0 = 1
+	end if
+	if object.value10 > 5
+		object.value10-= 10
+	else
+		object.value10 = 0
+	end if
+end event
+
+event ObjectDraw
+	// BGM Vol
+	if MenuSel == 0
+		DrawSpriteScreenXY(1, 20, 20)
+	else
+		DrawSpriteScreenXY(0, 20, 20)
+	end if
+	
+	// SFX Vol
+	if MenuSel == 1
+		DrawSpriteScreenXY(3, 20, 34)
+	else
+		DrawSpriteScreenXY(2, 20, 34)
+	end if
+
+	
+	// SS Music
+	if MenuSel == 2
+		DrawSpriteScreenXY(5, 20, 48)
+		object.value7 = object.value6
+		object.value7 += 4
+		DrawSpriteScreenXY(object.value7, 94, 48)
+	else
+		DrawSpriteScreenXY(4, 20, 48)
+		DrawSpriteScreenXY(object.value6, 94, 48)
+	end if
+	object.draworder = 6
+	SetScreenFade(0,0,0,object.value10)
+	object.draworder = 5
+
+
+end event
+
+event ObjectStartup
+	LoadSpriteSheet("Global/SettingsText1.gif")
+	SpriteFrame(0, 0, 84, 11, 1, 1)
+	SpriteFrame(0, 0, 84, 11, 1, 15)
+	SpriteFrame(0, 0, 84, 11, 1, 29)
+	SpriteFrame(0, 0, 84, 11, 1, 43)
+	SpriteFrame(14, 0, 70, 11, 15, 57)
+	SpriteFrame(14, 0, 70, 11, 15, 71)
+	SpriteFrame(14, 0, 16, 11, 86, 57) // Start SS Music stuff
+	SpriteFrame(14, 0, 39, 11, 105, 57)
+	SpriteFrame(14, 0, 37, 11, 147, 57)
+	SpriteFrame(14, 0, 40, 11, 187, 57)
+	SpriteFrame(14, 0, 16, 11, 86, 71)
+	SpriteFrame(14, 0, 39, 11, 105, 71)
+	SpriteFrame(14, 0, 37, 11, 147, 71)
+	SpriteFrame(14, 0, 40, 11, 187, 71)
+end event
